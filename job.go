@@ -3,6 +3,7 @@ package gotimer
 import (
 	"context"
 	"fmt"
+	"github.com/pkg/errors"
 	"log/slog"
 	"time"
 
@@ -49,9 +50,9 @@ func (j *Job) do(cmd func()) {
 		if err := recover(); err != nil {
 			switch v := err.(type) {
 			case error:
-				slog.Error(fmt.Sprintf("job panic:%v", v), slog.String("job", j.id))
+				slog.Error(fmt.Sprintf("job panic:%+v", errors.WithStack(v)), slog.String("job", j.id))
 			default:
-				slog.Error(fmt.Sprintf("job panic:%v", v), slog.String("job", j.id))
+				slog.Error(fmt.Sprintf("job panic:%+v", v), slog.String("job", j.id))
 			}
 		}
 	}()

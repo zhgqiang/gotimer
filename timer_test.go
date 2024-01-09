@@ -1,6 +1,8 @@
 package gotimer
 
 import (
+	"fmt"
+	"github.com/pkg/errors"
 	"testing"
 	"time"
 )
@@ -37,8 +39,9 @@ func Test_timer2(t *testing.T) {
 	})
 	t.Log("job2", job2)
 	job3 := timer.AddFunc(time.Second, func() {
-		t.Log("job3", time.Now().Local())
-		panic("job3 err")
+		err := fmt.Errorf("job3 err1")
+		err = errors.Wrap(err, "err2")
+		panic(err)
 	})
 	t.Log("job3", job3)
 	time.Sleep(time.Second * 10)
