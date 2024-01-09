@@ -34,14 +34,28 @@ func (j *Job) start(cmd func()) {
 		for {
 			select {
 			case <-j.ctx.Done():
-				slog.Info(fmt.Sprintf("停止定时,id=%s", j.id))
+				slog.Info("stop job", slog.String("job", j.id))
 				return
 			case <-j.ticker.C:
-				slog.Info(fmt.Sprintf("执行定时,id=%s", j.id))
-				cmd()
+				slog.Debug("do job", slog.String("job", j.id))
+				j.do(cmd)
 			}
 		}
 	}()
+}
+
+func (j *Job) do(cmd func()) {
+	defer func() {
+		if err := recover(); err != nil {
+			switch v := err.(type) {
+			case error:
+				slog.Error(fmt.Sprintf("job panic:%v", v), slog.String("job", j.id))
+			default:
+				slog.Error(fmt.Sprintf("job panic:%v", v), slog.String("job", j.id))
+			}
+		}
+	}()
+	cmd()
 }
 
 func (j *Job) stop() {
