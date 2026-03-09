@@ -2,8 +2,6 @@ package gotimer
 
 import (
 	"context"
-	"fmt"
-	"github.com/pkg/errors"
 	"log/slog"
 	"time"
 
@@ -35,7 +33,7 @@ func (j *Job) start(cmd func()) {
 		for {
 			select {
 			case <-j.ctx.Done():
-				slog.Info("stop job", slog.String("job", j.id))
+				slog.Debug("stop job", slog.String("job", j.id))
 				return
 			case <-j.ticker.C:
 				slog.Debug("do job", slog.String("job", j.id))
@@ -50,9 +48,9 @@ func (j *Job) do(cmd func()) {
 		if err := recover(); err != nil {
 			switch v := err.(type) {
 			case error:
-				slog.Error(fmt.Sprintf("job panic:%+v", errors.WithStack(v)), slog.String("job", j.id))
+				slog.Error("job panic", slog.String("job", j.id), slog.Any("error", v))
 			default:
-				slog.Error(fmt.Sprintf("job panic:%+v", v), slog.String("job", j.id))
+				slog.Error("job panic", slog.String("job", j.id), slog.Any("panic", v))
 			}
 		}
 	}()
