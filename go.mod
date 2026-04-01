@@ -1,4 +1,4 @@
-module github.com/zhgqiang/gotimer
+module github.com/felix-186/gotimer
 
 go 1.21.1
 

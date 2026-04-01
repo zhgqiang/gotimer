@@ -1,7 +1,7 @@
 # gotimer
 
 [![Go Version](https://img.shields.io/badge/Go-1.21%2B-00ADD8?logo=go)](https://go.dev/)
-[![Go Reference](https://pkg.go.dev/badge/github.com/zhgqiang/gotimer.svg)](https://pkg.go.dev/github.com/zhgqiang/gotimer)
+[![Go Reference](https://pkg.go.dev/badge/github.com/felix-186/gotimer.svg)](https://pkg.go.dev/github.com/felix-186/gotimer)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 
 一个轻量的 Go 周期定时任务库，用于按固定间隔重复执行函数。
@@ -38,7 +38,7 @@ A lightweight Go timer library for running functions repeatedly at a fixed inter
 ## 安装 / Installation
 
 ```bash
-go get github.com/zhgqiang/gotimer
+go get github.com/felix-186/gotimer
 ```
 
 ## 快速开始 / Quick Start
@@ -50,7 +50,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/zhgqiang/gotimer"
+	"github.com/felix-186/gotimer"
 )
 
 func main() {
